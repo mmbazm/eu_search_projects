@@ -1,0 +1,21 @@
+services:
+  backend:
+    build: ./backend
+    container_name: eu-search-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - EU_API_KEY=SEDIA_NONH2020_PROD
+      - EU_API_BASE_URL=https://api.tech.ec.europa.eu/search-api/prod/rest/search
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: eu-search-frontend
+    ports:
+      - "8501:8501"
+    environment:
+      - BACKEND_URL=http://backend:8000
+    depends_on:
+      - backend
+    restart: unless-stopped
