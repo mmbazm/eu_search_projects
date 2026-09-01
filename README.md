@@ -23,9 +23,9 @@ Screenshot of the running app `docs/eu_screenshot_1.png`
 ## Architecture
 
 ```
-┌─────────────┐      HTTP       ┌─────────────┐      HTTPS      ┌───────────────────┐
-│  frontend   │ ───────────────▶│   backend   │ ───────────────▶│  EU SEDIA search   │
-│ (Streamlit) │ ◀─────────────── │  (FastAPI)  │ ◀─────────────── │  API (external)    │
+┌─────────────┐      HTTP        ┌─────────────┐      HTTPS       ┌───────────────────┐
+│  frontend   │ ───────────────▶ │   backend   │ ───────────────▶ │  EU SEDIA search  │
+│ (Streamlit) │ ◀─────────────── │  (FastAPI)  │ ◀─────────────── │  API (external)   │
 └─────────────┘   JSON results   └─────────────┘   raw JSON       └───────────────────┘
 ```
 
@@ -36,16 +36,15 @@ Two containers, wired together with Docker Compose.
 
 ## Prerequisites
 
-- [Docker](https://docs.docker.com/get-docker/) and [Docker Compose v2](https://docs.docker.com/compose/install/) (the `docker compose` command, not the older standalone `docker-compose`)
+- [Docker](https://docs.docker.com/get-docker/) and [`Docker-Compose`](https://docs.docker.com/compose/install/)
 
-No local Python installation is required — everything runs inside the containers.
 
 ## Quick start
 
 ```bash
-git clone <this-repo-url>
-cd eu-project-search
-docker compose up --build
+git clone https://github.com/mmbazm/eu_search_projects.git
+cd eu_project_search
+docker-compose up --build
 ```
 
 Then open:
@@ -58,7 +57,7 @@ Type a keyword (e.g. `telco`), hit Search, and explore the results on the left, 
 To stop:
 
 ```bash
-docker compose down
+docker-compose down
 ```
 
 ## Project structure
@@ -139,7 +138,7 @@ All configuration is via environment variables, set in `docker-compose.yml`.
 | backend  | `EU_API_BASE_URL` | `https://api.tech.ec.europa.eu/search-api/prod/rest/search`  | The upstream EU search API                       |
 | backend  | `EU_API_KEY`      | `SEDIA_NONH2020_PROD`                                          | Override for a different dataset (e.g. H2020)     |
 | backend  | `EU_API_TIMEOUT`  | `20`                                                            | Seconds, per keyword request                      |
-| frontend | `BACKEND_URL`     | `http://backend:8000`                                          | Must use the Docker Compose service name           |
+| frontend | `BACKEND_URL`     | `http://localhost:8000`                                          | Must use the Docker Compose service name           |
 
 ## Design notes / assumptions
 
@@ -158,7 +157,7 @@ Contributions are welcome:
 
 1. Fork the repo and create a branch (`git checkout -b feature/my-feature`).
 2. Make your changes. Both services are plain Python — no build step beyond `pip install -r requirements.txt` if you want to run them outside Docker for faster iteration.
-3. Test locally with `docker compose up --build`.
+3. Test locally with `docker-compose up --build`.
 4. Open a pull request describing what changed and why.
 
 Bug reports and feature requests are welcome via [Issues](../../issues).
