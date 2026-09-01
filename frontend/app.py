@@ -9,17 +9,20 @@ Page layout: two top-level columns.
   scatterplot, with legalName/city/country as tooltip).
 """
 
+
+#Imports
 import html
 import os
 import pandas as pd
 import pydeck as pdk
 import requests
 import streamlit as st
-from datetime import datetime
-from collections import defaultdict
 import streamlit.components.v1 as components
 import pycountry
 
+#From
+from datetime import datetime
+from collections import defaultdict
 from helpers import (
     create_collaboration_graph,
     create_country_collaboration_graph,
@@ -34,7 +37,7 @@ from helpers import (
     create_project_collaboration_graph
 )
 
-
+#Variables
 BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 TITLE_COLOR = "#003399"  # EU flag blue
 
@@ -58,7 +61,7 @@ ALL_PARTICIPANTS_LABEL = "All participants"
 ALL_STATUS_LABEL = "All status"
 FALLBACK_YEAR_RANGE = (2014, 2030)  # used only when no projects have a parseable date yet
 
-
+#Functions
 def _extract_year(date_str):
     """Best-effort: pulls a 4-digit year off the front of an ISO-ish date string."""
     if not date_str:
@@ -223,18 +226,6 @@ with col_controls:
                 help="Only show projects with selected status.",
             )
 
-#        narrow_col4, _ = st.columns([1, 1])
-#        with narrow_col4:
-#            start_year_range = _year_range_slider(
-#                "Start year", start_bounds, "Only show projects whose start date falls in this range."
-#            )
-
-#        narrow_col5, _ = st.columns([1, 1])
-#        with narrow_col5:
-#            end_year_range = _year_range_slider(
-#                "End year", end_bounds, "Only show projects whose end date falls in this range."
-#            )
-
         narrow_col6, _ = st.columns([1, 1])
         with narrow_col6:
             year_range = _year_range_slider(
@@ -262,16 +253,6 @@ with col_controls:
                 for p in projects
                 if p.get("status") == status_filter
             ]
-#        if start_year_range != start_bounds:
-#            lo, hi = start_year_range
-#            projects = [
-#                p for p in projects if (y := _extract_year(p.get("start_date"))) is not None and lo <= y <= hi
-#            ]
-#        if end_year_range != end_bounds:
-#            lo, hi = end_year_range
-#            projects = [
-#                p for p in projects if (y := _extract_year(p.get("end_date"))) is not None and lo <= y <= hi
-#            ]
         if year_range != year_bounds:
             lo, hi = year_range
             projects = [
@@ -288,10 +269,6 @@ with col_controls:
                 active_filters.append(f"participant = {participant_filter}")
             if status_filter != ALL_STATUS_LABEL:
                 active_filters.append(f"status = {status_filter}")
-#            if start_year_range != start_bounds:
-#                active_filters.append(f"start year = {start_year_range[0]}-{start_year_range[1]}")
-#            if end_year_range != end_bounds:
-#                active_filters.append(f"end year = {end_year_range[0]}-{end_year_range[1]}")
             if year_range != year_bounds:
                 active_filters.append(f"year range = {year_range[0]}-{year_range[1]}")
 
@@ -441,16 +418,16 @@ with col_detail:
                 scrolling=True,
             )
 
-    with st.container(border=True):
-        st.markdown("**Collaboration Graph between participants on the given projects:**")
-        if selected_idx is None:
-            st.info("collaboration graph will appear here.")
-        else:
-            print("")
-            #net = create_collaboration_graph(projects)
-            #html = net.generate_html(notebook=False)
+#    with st.container(border=True):
+#        st.markdown("**Collaboration Graph between participants on the given projects:**")
+#        if selected_idx is None:
+#            st.info("collaboration graph will appear here.")
+#        else:
+#            print("")
+#            net = create_collaboration_graph(projects)
+#            html = net.generate_html(notebook=False)
+#            components.html(html,height=750,scrolling=True,)
 
-            #components.html(html,height=750,scrolling=True,)
 
     with st.container(border=True):
         st.markdown("**Collaboration Graph between projects on the given list of participants:**")

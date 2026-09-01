@@ -22,6 +22,11 @@ into a compact structure the frontend can consume directly:
             "longitude": -3.66
           }
         ]
+        start_date: "..."
+        end_date: "..."
+        status: "..."
+        overall_budget: "..."
+        eu_contribution_amount: "..." 
       }
     ]
   }

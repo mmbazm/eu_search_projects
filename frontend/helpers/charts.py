@@ -352,7 +352,7 @@ def create_country_collaboration_graph(
 
         size = 5 + project_count * 1.5
         color = mcolors.to_hex(cmap(norm(project_count)))
-        print(country,"*********", flush=True)
+
         net.add_node(
             country,
             label=country,
